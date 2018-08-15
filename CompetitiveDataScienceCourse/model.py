@@ -35,7 +35,7 @@ def agg_multiple(df, labels, aggvar, repl=None):
 
 train_set = pd.read_csv(DATA_DIR + "train_data.csv")
 
-train_set = train_set.sample(100000) #I don't have time to train on 3mil
+train_set = train_set.sample(3000000) #I don't have time to train on 3mil
 
 X_ = np.array(train_set[["date_block_num", "shop_id","item_id"]])
 y_ = np.array(train_set[["item_cnt_mnth"]])
