@@ -11,7 +11,7 @@ from sklearn import linear_model
 DATA_DIR = "../"
 
 dataset = pd.read_csv(DATA_DIR + "train_data.csv")
-train_set = train_set.sample(frac=1) #I don't have time to train on 3mil
+train_set = dataset.sample(frac=1) #I don't have time to train on 3mil
 
 X_ = np.array(train_set[["date_block_num", "shop_id","item_id"]])
 y_ = np.array(train_set[["item_cnt_mnth"]])
