@@ -8,14 +8,14 @@ import pickle
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn import linear_model
 
-DATA_DIR = "~/.kaggle/competitions/competitive-data-science-final-project/"
+DATA_DIR = "~/"
 
 # TODO:
 # read in csv file, remove headers and date, sort by date_block_num by item_id by store_id with custom sort criteria
 # aggregate variable item_cnt_day in last column for each store in date_block_num as new row item_cnt_month
-#train_set = pd.read_csv(DATA_DIR + "sales_train.csv")  
-#train_set=train_set.iloc[: , 1:]
-#train_set = train_set.sort_values(by=["date_block_num", "shop_id","item_id"])
+train_set = pd.read_csv(DATA_DIR + "sales_train.csv")  
+train_set=train_set.iloc[: , 1:]
+train_set = train_set.sort_values(by=["date_block_num", "shop_id","item_id"])
 #train_set = train_set.agg(["sum"])
 #print(train_set)
 
@@ -29,13 +29,14 @@ def agg_multiple(df, labels, aggvar, repl=None):
     return df.groupby(labels)[(aggvar)].sum().to_frame(repl).reset_index()
 
 #used for file creation
-#train_set = agg_multiple(train_set, ["date_block_num", "shop_id", "item_id"], "item_cnt_day", repl="item_cnt_mnth")
-#train_set[train_set["item_cnt_mnth"] > 20] = 20
-#train_set.to_csv(DATA_DIR + "train_data.csv")
+train_set = agg_multiple(train_set, ["date_block_num", "shop_id", "item_id"], "item_cnt_day", repl="item_cnt_mnth")
+train_set[train_set["item_cnt_mnth"] > 20] = 20
+train_set.to_csv(DATA_DIR + "train_data.csv")
+print("Training set created")
 
 train_set = pd.read_csv(DATA_DIR + "train_data.csv")
 
-train_set = train_set.sample(3000000) #I don't have time to train on 3mil
+train_set = train_set.sample(frac=1) #I don't have time to train on 3mil
 
 X_ = np.array(train_set[["date_block_num", "shop_id","item_id"]])
 y_ = np.array(train_set[["item_cnt_mnth"]])
@@ -47,10 +48,10 @@ y_test = np.array(tests[["item_cnt_mnth"]])
 
 #regr = SVR(C=1, epsilon = .1, gamma=.001, kernel="sigmoid")
 #regr.fit(X_, y_.ravel())
-
+print("Beginning Fitting")
 regr = SVR(C=50, epsilon = .1, gamma=.001, kernel="rbf")
 regr.fit(X_, y_.ravel())
-
+print("Creating Predictions")
 preds = np.round(regr.predict(y_test))
 
 true = np.sum((preds == y_test.ravel() )) / len(y_test) 
@@ -88,6 +89,7 @@ subm.to_csv(DATA_DIR + "final.csv", index=False)
 #print(clf1.best_estimator_)
 
 #preds = np.round(clf1.predict(X_test))
+
 
 
 
