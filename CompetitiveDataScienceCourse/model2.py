@@ -41,10 +41,10 @@ train_preds = np.round(clf.predict(X_))
 test_preds = np.round(clf.predict(X_test))
 
 train_acc = accuracy_score(train_preds, y_.ravel())
-print("train accuracy is ", true)
+print("train accuracy is ", train_acc)
 
 test_acc = accuracy_score(test_preds, y_test.ravel())
-print("test accuracy is ", true)
+print("test accuracy is ", test_acc)
 
 
 

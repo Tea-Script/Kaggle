@@ -24,11 +24,15 @@ print("Beginning Fitting")
 regr = SVR(C=50, epsilon = .1, gamma=.001, kernel="rbf")
 regr.fit(X_, y_.ravel())
 print("Creating Predictions")
-preds = np.round(regr.predict(y_test))
 
-true = np.sum((preds == y_test.ravel() )) / len(y_test) 
-print("true accuracy is ", true)
+train_preds = np.round(regr.predict(X_))
+test_preds = np.round(regr.predict(X_test))
 
+train_acc = accuracy_score(train_preds, y_.ravel())
+print("train accuracy is ", train_acc)
+
+test_acc = accuracy_score(test_preds, y_test.ravel())
+print("test accuracy is ", test_acc)
 
 
 
