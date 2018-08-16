@@ -8,7 +8,7 @@ import pickle
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn import linear_model
 
-DATA_DIR = "~/"
+DATA_DIR = "../"
 
 # TODO:
 # read in csv file, remove headers and date, sort by date_block_num by item_id by store_id with custom sort criteria
@@ -34,17 +34,13 @@ train_set[train_set["item_cnt_mnth"] > 20] = 20
 train_set.to_csv(DATA_DIR + "train_data.csv")
 print("Training set created")
 
-train_set = pd.read_csv(DATA_DIR + "train_data.csv")
-
+dataset = pd.read_csv(DATA_DIR + "train_data.csv")
 train_set = train_set.sample(frac=1) #I don't have time to train on 3mil
 
 X_ = np.array(train_set[["date_block_num", "shop_id","item_id"]])
 y_ = np.array(train_set[["item_cnt_mnth"]])
 
-tests = train_set.sample(5000)
-X_test = np.array(tests[["date_block_num", "shop_id","item_id"]])
-y_test = np.array(tests[["item_cnt_mnth"]])
-
+tests = dataset.sample(5000)
 
 #regr = SVR(C=1, epsilon = .1, gamma=.001, kernel="sigmoid")
 #regr.fit(X_, y_.ravel())

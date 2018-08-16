@@ -9,7 +9,7 @@ from sklearn.preprocessing import PolynomialFeatures
 from sklearn import linear_model
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import accuracy_score
-DATA_DIR = "~/.kaggle/competitions/competitive-data-science-final-project/"
+DATA_DIR = "../"
 
 # TODO:
 # read in csv file, remove headers and date, sort by date_block_num by item_id by store_id with custom sort criteria
@@ -33,15 +33,15 @@ def agg_multiple(df, labels, aggvar, repl=None):
 train_set = agg_multiple(train_set, ["date_block_num", "shop_id", "item_id"], "item_cnt_day", repl="item_cnt_mnth")
 train_set[train_set["item_cnt_mnth"] > 20] = 20
 train_set.to_csv(DATA_DIR + "train_data.csv")
+print("Training set created")
 
-train_set = pd.read_csv(DATA_DIR + "train_data.csv")
-
+dataset = pd.read_csv(DATA_DIR + "train_data.csv")
 train_set = train_set.sample(frac=.001) #I don't have time to train on 3mil
 
 X_ = np.array(train_set[["date_block_num", "shop_id","item_id"]])
 y_ = np.array(train_set[["item_cnt_mnth"]])
 
-tests = train_set.sample(5000)
+tests = dataset.sample(5000)
 X_test = np.array(tests[["date_block_num", "shop_id","item_id"]])
 y_test = np.array(tests[["item_cnt_mnth"]])
 
@@ -52,11 +52,10 @@ y_test = np.array(tests[["item_cnt_mnth"]])
 regr = RandomForestRegressor( )
 regr.fit(X_, y_.ravel())
 
-n_estimators=500,max
-Params = {"n_estimators" : [300,500, 700, 1000], "max_depth" : {10, 50, 100, 150, 200}, "max_features" : ["auto", None], "min_samples_split" : [2, 6, 8, 10 , 20]}
+Params = {"n_estimators" : [300,500, 700, 1000], "max_depth" : [10, 50, 100, 150, 200], "max_features" : ["auto", None], "min_samples_split" : [2, 6, 8, 10 , 20]}
 
-clf = GridSearchCV(regr, Par1)
-clf.fit(X, y.ravel())
+clf = GridSearchCV(regr, Params)
+clf.fit(X_, y_.ravel())
 
 print(clf.score(X_test, y_test.ravel()))
 print(clf.best_params_)
@@ -68,7 +67,7 @@ train_acc = accuracy_score(train_preds, y_.ravel())
 print("train accuracy is ", true)
 
 test_acc = accuracy_score(test_preds, y_test.ravel())
-print("train accuracy is ", true)
+print("test accuracy is ", true)
 
 
 
