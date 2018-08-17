@@ -32,5 +32,6 @@ def agg_multiple(df, labels, aggvar, repl=None):
 #used for file creation
 train_set = agg_multiple(train_set, ["date_block_num", "shop_id", "item_id"], "item_cnt_day", repl="item_cnt_mnth")
 train_set[train_set["item_cnt_mnth"] > 20] = 20
+train_set[train_set["item_cnt_mnth"] < 0] = 0
 train_set.to_csv(DATA_DIR + "train_data.csv")
 print("Training set created")
