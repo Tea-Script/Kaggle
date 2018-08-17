@@ -28,9 +28,9 @@ y_test = np.array(tests[["item_cnt_mnth"]])
 
 regr = xgb.XGBRegressor()
 #regr.fit(X_,y_)
-print(y_.min())
+
 Params = {"learning_rate": [.001, .01], "colsample_bytree" : [.2, .4, .7], "subsample": [.4, .6,.8, .9], "n_estimators" : [300,500, 700, 1000],
-          "max_depth" : [20, 100, 150, 200], "objective": ["reg:tweedie", "survival:cox", "reg:logistic"]
+          "max_depth" : [20, 100, 150, 200], "objective": ["reg:tweedie", "survival:cox"]
 
 }
 
