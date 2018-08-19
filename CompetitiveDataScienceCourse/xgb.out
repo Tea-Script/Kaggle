@@ -1,7 +1,7 @@
-0.5560700051720588
-{'colsample_bytree': 0.2, 'learning_rate': 0.01, 'max_depth': 150, 'n_estimators': 1000, 'objective': 'reg:tweedie', 'subsample': 0.4}
-train accuracy is  0.5173759570448444
-test accuracy is  0.4876
+0.5835350519078011
+{'colsample_bytree': 0.2, 'learning_rate': 0.01, 'max_depth': 150, 'n_estimators': 1000, 'objective': 'reg:tweedie', 'subsample': 0.6}
+train accuracy is  0.500719646217445
+test accuracy is  0.5068
 reading in test set
 creating predictions
 generating submission file
